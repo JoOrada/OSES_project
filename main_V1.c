@@ -22,7 +22,15 @@ int Sensor_return=0;
 #define EchoR_PIN 1
 #define Speed_PIN 2
 
-bool task1(){ //sensors return Stop or not [ALERT]
+//Task definitions
+int task3();
+int task2();
+int task1();
+
+
+
+int task1(){ //sensors return Stop or not [ALERT]
+    printf("Task 1 here");
 
     rt_pin_mode(Ultrasonicsensor_PIN, PIN_MODE_OUTPUT);
     rt_pin_mode(EchoR_PIN, PIN_MODE_INPUT);
@@ -34,43 +42,54 @@ bool task1(){ //sensors return Stop or not [ALERT]
     Getspeed= rt_pin_read(Speed_PIN);
     Safe= Getspeed*(Getspeed/6+1.1);
     distance= Sensor_return*0.034/2;
+  
+    //Verifying if it is necessary to brake or not
     if (distance <= Safe);
     {
-
+        task2();
     }   
 
 }
-bool task2(){ //Alert the user
+int task2(){ //Alert the user
     //output sensor
 
-   
-
-
+    printf("Output 1 -> Task 2 here");
+    alert=1;
+    task3();
+    return alert;
 }
-
-bool VerifyBrakes(){
-
-    //The user pressed the brakes   return 1
-
-    //The user didn t press brakes  return 0 
-    
-}
-
 
 int task3(){
+    printf("Task 3 here");
     
-    //loop()
+    //loop(timer)
+    while(1){
         //wait to check the brakes 
+    }
     
-    //if 1 
+    if (check==1){
         //Back to task 1
-    //else 
+        task1();
+        
+    }else{
         //at the end jump to  or 4
+        task4();
+    }
+        
+ 
+    return ;
 }
+
+int task4(){
+    //output to the braking system
+    
+}
+
 
 int main(void)
 {
+    task1();
     
-
+  
     return RT_EOK;
 }
