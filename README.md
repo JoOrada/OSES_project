@@ -5,6 +5,7 @@ The expected simulated inputs are speed, break signal and distance, and the outp
 
 # Sytem description
 The system shall constantly monitor the values from the sensors and comparing it with the reference of the safe distance according to the car speed (m/s). In case of potencial collision, a message will be sent to the driver. If the driver presses the brakes in the period of 0.8 sec the system automatically presses the breaking system. 
+The sensors are simulated by reading a file with random distances, in the beginning 4 sensors are simulated and then increased in order to pressure the system as proposed by the professor of this couse. 
 
 # Implemented threads
 
@@ -13,3 +14,5 @@ The system shall constantly monitor the values from the sensors and comparing it
 # Code specs
 
 # Pressuring the system
+
+In order to pressure the system, the implementation of new sensors was made. The sensors, as described before, are simulated by the reading of a file. Each sensor has a different file making the system to open and close the files consecutively. The number of simulated sensors varies, but the simulated ones correspond to X AND Y.
