@@ -320,8 +320,7 @@ RTM_EXPORT(rt_thread_self);
  * @return  Return the operation status. If the return value is RT_EOK, the function is successfully executed.
  *          If the return value is any other values, it means this operation failed.
  */
-rt_err_t rt_thread_startup(rt_thread_t thread)
-{
+static rt_err_t __rt_thread_startup(rt_thread_t thread){
     /* thread check */
     RT_ASSERT(thread != RT_NULL);
     RT_ASSERT((thread->stat & RT_THREAD_STAT_MASK) == RT_THREAD_INIT);
@@ -353,7 +352,22 @@ rt_err_t rt_thread_startup(rt_thread_t thread)
 
     return RT_EOK;
 }
+
+
+rt_err_t rt_thread_startup(rt_thread_t thread)
+{
+    if (!thread->period)
+        return __rt_thread_startup(thread);
+
+    rt_timer_start(&thread->thread_period_timer);
+
+
+    return RT_EOK;
+}
 RTM_EXPORT(rt_thread_startup);
+
+
+
 
 /**
  * @brief   This function will detach a thread. The thread object will be removed from
@@ -463,7 +477,85 @@ rt_thread_t rt_thread_create(const char *name,
 
     return thread;
 }
+
+
+
+static void rt_periodic_task_f(void *param)
+{
+    rt_thread_t thread = rt_thread_self();
+
+    while (1)
+    {
+        if (thread->entry_callback)
+        {
+            void (*entry)(void *parameter) = thread->entry_callback;
+
+            entry(param);
+        }
+
+        rt_thread_suspend(thread);
+        rt_schedule();
+    }
+}
+
+static void rt_thread_timer_f(void *parameter)
+{
+    rt_thread_t thread = parameter;
+    rt_uint8_t stat = thread->stat & RT_THREAD_STAT_MASK;
+
+    switch (stat)
+    {
+    case RT_THREAD_INIT:
+        __rt_thread_startup(thread);
+        break;
+
+    case RT_THREAD_SUSPEND:
+        rt_thread_resume(thread);
+
+        if (rt_thread_self() != RT_NULL)
+        {
+            rt_schedule();
+        }
+        break;
+
+    default:
+        rt_timer_stop(&thread->thread_period_timer);
+        rt_thread_delete(thread);
+        break;
+    }
+}
+
+rt_thread_t rt_thread_create_periodic(const char *name,
+                                      void (*entry)(void *parameter),
+                                      void       *parameter,
+                                      rt_uint32_t stack_size,
+                                      rt_uint8_t  priority,
+                                      rt_uint32_t tick,
+                                      rt_uint32_t period)
+
+
+
+{
+    void (*__entry)(void *parameter) = period ? rt_periodic_task_f : entry;
+    rt_thread_t thread;
+
+    thread = rt_thread_create(name, __entry, parameter,
+                              stack_size, priority, tick);
+
+    if (!period)
+        return thread;
+
+    thread->period = period;
+    thread->entry_callback = (void*) entry;
+
+    rt_timer_init(&thread->thread_period_timer, name,
+                  rt_thread_timer_f, thread, period, RT_TIMER_FLAG_PERIODIC);
+
+    return thread;
+}
 RTM_EXPORT(rt_thread_create);
+
+
 
 /**
  * @brief   This function will delete a thread. The thread object will be removed from

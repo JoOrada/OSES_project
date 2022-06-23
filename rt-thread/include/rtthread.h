@@ -131,6 +131,15 @@ rt_err_t rt_thread_init(struct rt_thread *thread,
                         rt_uint32_t       stack_size,
                         rt_uint8_t        priority,
                         rt_uint32_t       tick);
+
+rt_thread_t rt_thread_create_periodic(const char *name,
+                                      void (*entry)(void *parameter),
+                                      void       *parameter,
+                                      rt_uint32_t stack_size,
+                                      rt_uint8_t  priority,
+                                      rt_uint32_t tick,
+                                      rt_uint32_t period);
+
 rt_err_t rt_thread_detach(rt_thread_t thread);
 #ifdef RT_USING_HEAP
 rt_thread_t rt_thread_create(const char *name,
