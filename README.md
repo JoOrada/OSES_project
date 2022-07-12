@@ -1,6 +1,6 @@
 # Collision Detection Device based on RT-Thread 
 
-The objective of this project is to develop a software for a STM32f413 board that detects incoming obstacke using sensors and sending instructions to propulsion device to slow down or using the braking system to prevent a collision. 
+The objective of this project is to develop a software for a STM32F401Cb board that detects incoming obstacke using sensors and sending instructions to propulsion device to slow down or using the braking system to prevent a collision. 
 The expected simulated inputs are speed, break signal and LIDAR Time, and the outputs correspond to Warning alerts and automatic breaking. 
 
 # Sytem description
@@ -18,8 +18,8 @@ There are 3 direct threads and a function linked to a timer.
 
 Timer Runout (Breaktimeout)- When timer runs out and break is not applied by the driver then break is automatically applied by the system and normal system working is resumed.
 # Diagram Flow
-
-# Code specs
+![SS 2022-07-12 at 6 43PM 1](https://user-images.githubusercontent.com/80212336/178583944-07aba20c-5951-4d1f-af94-ddfc225d0e01.jpg)
+![SS 2022-07-12 at 7 04PM 2](https://user-images.githubusercontent.com/80212336/178583969-81819321-e43b-4fd1-8810-152121d40b75.jpg)
 
 # Pressuring the system
 
