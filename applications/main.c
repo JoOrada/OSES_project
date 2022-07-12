@@ -23,7 +23,7 @@
 #include <board.h>
 
 static void PeriodicInit_entry(void* parameter){
-    periodic_t= rt_thread_create_periodic("t1",SensorInitiation_entry, RT_NULL, sizeof(SensorInit_stack),1, 10,100);
+    periodic_t= rt_thread_create_periodic("t1",SensorInitiation_entry, RT_NULL, sizeof(SensorInit_stack),1, 10,500);
     rt_thread_startup(periodic_t);
 
 }
@@ -32,7 +32,7 @@ int main(void)
 {
     rt_thread_t get_cpu_use_thread = RT_NULL;
     get_cpu_use_thread = cpu_thread_init(get_cpu_use_thread);
-  // cpu_thread_start(get_cpu_use_thread);
+   cpu_thread_start(get_cpu_use_thread);
         LOG_D("Hello RT-Thread!");
 
 

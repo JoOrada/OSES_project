@@ -12,7 +12,7 @@ static void Breakout1(void* parameter)
     LOG_D("Breaking!");
     rt_pin_mode(Brake_PIN, PIN_MODE_OUTPUT);
        rt_pin_write(Brake_PIN, PIN_HIGH);
-       z= 1;
+       z= 10;
        }
 
 
@@ -24,24 +24,22 @@ static void BrakeWait_entry(void* parameter)
 
        if (y=10){
            BrakeTimeout = rt_timer_create("BrakeTimeout", Breakout1,
-                                                           RT_NULL, 70,
-                                                           RT_TIMER_FLAG_PERIODIC);
+                                                           RT_NULL, 700,
+                                                           RT_TIMER_FLAG_ONE_SHOT);
            rt_timer_start(BrakeTimeout);
                rt_enter_critical();
                LOG_D("Brake_System Starts!");
                     rt_pin_mode(Sensor_PIN, PIN_MODE_INPUT);
-                        z=0;
-                      while(z==0)
+                    LOG_D("Wait!");
+                      while(z!=10)
                       {
-                          z=rand()%2;
-                          LOG_D("Wait!");
+                          z=rand()%500;
+
 
                       }
-
-                            if (z==1){
-                                LOG_D("Braking!");
+                      LOG_D("Breaking!");
                                 rt_timer_stop(BrakeTimeout);
+                                z=0;
                         rt_exit_critical();
-                    }
 
     }}}

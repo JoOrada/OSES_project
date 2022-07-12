@@ -1,5 +1,5 @@
-#define THREAD_TIMESLICE        10
-#define THREAD_PRIORITY         5
+#define THREAD_TIMESLICE        20
+#define THREAD_PRIORITY         1
 #define Speed_PIN 3
 #define Brake_PIN 4
 #define Laser_pin 0
@@ -28,5 +28,5 @@ rt_int16_t Safe;
         rt_thread_t periodic_t;
         struct rt_thread SensorInit;
         static char PeriodicInit_stack[1024];
-        static char BrakeWait_stack[1024];
+        static char BrakeWait_stack[2048];
         rt_err_t err;

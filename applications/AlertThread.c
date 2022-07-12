@@ -8,7 +8,7 @@
 #include <rtdevice.h>
 
 struct rt_thread Alert;
-static char Alert_stack[256];
+static char Alert_stack[1024];
 #define BEEP_PIN 5
 
 static void Alert_entry(void* parameter)

@@ -7,7 +7,7 @@
 #include <rtdevice.h>
 #include "main.h"
 
-static char SensorInit_stack[512];
+static char SensorInit_stack[1024];
 
 
 static void SensorInitiation_entry(void* parameter)
@@ -19,7 +19,7 @@ static void SensorInitiation_entry(void* parameter)
 
                           Getspeed= rand()%40;
                           Safe= Getspeed*(Getspeed/6+1.1);
-                          Sensor_return= rand()%200;
+                          Sensor_return= rand()%20000000;
                           distance= Sensor_return*299792458/2;
 
      if (distance<=Safe) {
