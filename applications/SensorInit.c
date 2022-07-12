@@ -17,10 +17,10 @@ static void SensorInitiation_entry(void* parameter)
              rt_pin_write(Laser_pin, PIN_HIGH);
                    rt_pin_write(Laser_pin, PIN_LOW);
 
-                          Getspeed= 20;
+                          Getspeed= rand()%40;
                           Safe= Getspeed*(Getspeed/6+1.1);
-                          Sensor_return= 10000;
-                          distance= Sensor_return*0.034/2;
+                          Sensor_return= rand()%200;
+                          distance= Sensor_return*299792458/2;
 
      if (distance<=Safe) {
          LOG_D("Hello! SensorInit Failed");

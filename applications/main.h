@@ -20,7 +20,7 @@ rt_int16_t Safe;
     rt_int16_t Sensor_return;
     rt_int16_t Getspeed ;
     static rt_timer_t BrakeTimeout;
-        int16_t z;
+
         // Creating Structures for Threads
         struct rt_thread BrakeWait;
         struct rt_thread PeriodicInit;
@@ -28,5 +28,5 @@ rt_int16_t Safe;
         rt_thread_t periodic_t;
         struct rt_thread SensorInit;
         static char PeriodicInit_stack[1024];
-        static char BrakeWait_stack[256];
+        static char BrakeWait_stack[1024];
         rt_err_t err;
