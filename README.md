@@ -12,7 +12,7 @@ There are 3 direct threads and a function linked to a timer.
 
 (Thread 1) LIDAR Intialisation- For the first Thread we added a periodic thread creation functionality into the base rt-os system. As this thread is continously run untill an event occurs. This thread begins by sending a laser for a one pluse and then a detection sensor is used to detect how much time it took for laser to reach back. Then according to this time a safe distance between two cars is calculated and compared with the distance that car will go if stopped at that moment. If the distance is less than safe distance a alert thread is started.
 
-(Thread 2) Alert System - This a infinte loop thread that waits for message fronm first periodic thread. When a message is recevied it sends a beep signal as alert to the driver inside the car and sendes a message to activate next thread i.e. BreakSystem
+(Thread 2) Alert System - This a infinte loop thread that waits for message from first periodic thread. When a message is recevied it sends a beep signal as alert to the driver inside the car and sendes a message to activate next thread i.e. BreakSystem
 
 (Thread 3) Break System - This is also an infinte loop that waits for a message from alert thread. When message is recevied it initialise a timer for 0.7 secs. It starts to receive breaking signal from the car and waits for it until break is applied or timer runout.
 
