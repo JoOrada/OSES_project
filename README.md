@@ -1,6 +1,6 @@
 # Collision Detection Device based on RT-Thread 
 
-The objective of this project is to develop a software for a STM32F401Cb board that detects incoming obstacke using sensors and sending instructions to propulsion device to slow down or using the braking system to prevent a collision. 
+The objective of this project is to develop a software for a STM32F401Cb board that detects incoming obstacle using sensors and sending instructions to propulsion device to slow down or using the braking system to prevent a collision. 
 The expected simulated inputs are speed, break signal and LIDAR Time, and the outputs correspond to Warning alerts and automatic breaking. 
 
 # Sytem description
